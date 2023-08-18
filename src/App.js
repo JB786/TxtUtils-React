@@ -5,32 +5,61 @@ import { useState } from "react";
 import About from "./components/About";
 import Navbar from "./components/Navbar";
 import TextForm from "./components/TextForm";
+import Alert from "./components/Alert";
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+
 
 //let b = "<strong>ASS-HOLES!</strong>" // JSX sanitizes the external HTML code if we try to add that external html code through JavaScript variable.
 export default function App() {
 
-const [mode, setMode] = useState("light");
-const [modeText, setModeText] = useState("Toggle Dark Mode")
+  const [mode, setMode] = useState("light");
+  const [modeText, setModeText] = useState("Toggle Dark Mode");
+  const [alert, setAlert] = useState(null);
 
-const toggleMode = ()=>{
-  if(mode === "light"){
-    setMode("dark")
-    setModeText("Toggle Light Mode")
-    document.body.style.backgroundColor = "#0a0720";
+  const showAlert = (message, type) => {
+
+    setAlert({
+      msg: message,
+      type: type
+    })
+
+    setTimeout(() => {
+      setAlert(null)
+    }, 1500)
   }
-  else{
-    setMode("light")
-    setModeText("Toggle Dark Mode")
-    document.body.style.backgroundColor = "white";
+
+  const toggleMode = () => {
+    if (mode === "light") {
+      setMode("dark")
+      setModeText("Toggle Light Mode")
+      document.body.style.backgroundColor = "#0a0720";
+      showAlert("Dark Mode Enabled!", "success")
+    }
+    else {
+      setMode("light")
+      setModeText("Toggle Dark Mode")
+      document.body.style.backgroundColor = "white";
+      showAlert("Light Mode Enabled!", "success")
+    }
   }
-}
 
   return (
     // <>...</> this is called JSX-Fragment.
     <>
-      <Navbar title="TxtUtils.co" mode={mode} toggleMode={toggleMode} modeText={modeText} />
-      <TextForm heading="Enter Your Text Below" mode={mode} />
-      {/* <About/> */}
+      <BrowserRouter>
+        <Navbar title="TxtUtils.io" mode={mode} toggleMode={toggleMode} modeText={modeText} />
+        {/* React-Router-dom code */}
+        <Routes>
+          <Route exact path="/" element={<TextForm heading="Enter Your Text Below" mode={mode} showAlert={showAlert} />} />
+          <Route exact path="/about" element={<About />} />
+        </Routes>
+        {/* React-Router-dom code */}
+        <Alert alert={alert} />
+      </BrowserRouter >
     </>
   );
 }
@@ -38,3 +67,10 @@ const toggleMode = ()=>{
 // Now if we want a functionality to change our title anytime we want to then we do that by passing title as a props (properties) in <Navbar/>. After that we can access those props in our Navbar function JSX in Navbar.js by passing props as a parameter to Navbar function. Then we can access those props anywhere in Navbar.js JSX by writing {props.prop_name}
 
 
+// react-router-dom help in navigation of tabs on navbar without reloading the entire webpage again and again.
+
+// We use "exact" keyword in <Route path> above because if we try to render "/users/home" as component-2 it will render "/users" which is component-1 even if we want to render component-2 that's why we use exact.
+
+// in React-router-dom instead of using <a href=""> we use <link to="">
+
+//Now we deploy this website on GitHub pages for that go to 

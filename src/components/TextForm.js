@@ -22,35 +22,35 @@ export default function TextForm(props) {
     const handleUpClick = () => {
         let newText = text.toUpperCase();
         setText(newText);
+        props.showAlert("Converted to UpperCase Characters!","success")
     }
-
+    
     const handleLowClick = () => {
         let newText = text.toLowerCase();
         setText(newText);
+        props.showAlert("Converted to LowerCase Characters!","success")
     }
-
+    
     const handleNoClick = () => {
         let newText = "";
         let element = document.getElementById("mytext");
         element.select();
         setText(newText);
+        props.showAlert("Text Cleared!","success")
     }
     
     const handleCopyClick = () => {
         let element = document.getElementById("mytext");
-        let alert = document.querySelector(".alert");
         element.select();
         //element.setSelectionRange(0,99999); // for mobile devices
         navigator.clipboard.writeText(element.value);
-        alert.hidden = (false);
-        setTimeout(()=>{
-            alert.hidden = (true);
-        },3000);
+        props.showAlert("Copied to Clipboard!","success")
     }
-
+    
     const handleExtraSpaces = () => {
         let newText = text.split(/[ ]+/g);
         setText(newText.join(" "));
+        props.showAlert("Extra Spaces Removed!","success")
     }
 
     const handleOnType = (event) => {
@@ -58,27 +58,24 @@ export default function TextForm(props) {
     }
     return (
         <>
-            <div className="container my-3" style={{color: props.mode === "dark" ? "white":"black"}}>
-                <div className="alert alert-success" role="alert" hidden={true}>
-                    Text Copied to Clipboard Successfully.
-                </div>
+            <div className="container my-3" style={{ color: props.mode === "dark" ? "white" : "black" }}>
                 <div className="mb-3">
                     <label htmlFor="mytext" className="form-label"><h1>{props.heading}</h1></label>
-                    <textarea className="form-control" value={text} onChange={handleOnType} id="mytext" placeholder='Write Anything Here' rows="8" style={{backgroundColor: props.mode === "dark" ? "#afa8a8":"white", color: props.mode === "dark" ? "white":"black"}}></textarea>
+                    <textarea className="form-control" value={text} onChange={handleOnType} id="mytext" placeholder='Write Anything Here' rows="8" style={{ backgroundColor: props.mode === "dark" ? "rgb(112 112 102)" : "white", color: props.mode === "dark" ? "rgb(224, 241, 6)" : "black" }}></textarea>
                 </div>
-                <button className={`btn btn-${props.mode === "dark" ? "info": "primary"} mx-1`} onClick={handleUpClick}>To UpperCase</button>
-                <button className={`btn btn-${props.mode === "dark" ? "info": "primary"} mx-1`} onClick={handleLowClick}>To LowerCase</button>
-                <button className={`btn btn-${props.mode === "dark" ? "info": "primary"} mx-1`} onClick={handleNoClick}>Clear All</button>
-                <button className={`btn btn-${props.mode === "dark" ? "info": "primary"} mx-1`} onClick={handleCopyClick}>Copy to Clipboard</button>
-                <button className={`btn btn-${props.mode === "dark" ? "info": "primary"} mx-1`} onClick={handleExtraSpaces}>Remove Extra-Spaces</button>
+                <button className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1`} onClick={handleUpClick}>To UpperCase</button>
+                <button className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1`} onClick={handleLowClick}>To LowerCase</button>
+                <button className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1`} onClick={handleNoClick}>Clear All</button>
+                <button className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1`} onClick={handleCopyClick}>Copy to Clipboard</button>
+                <button className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1`} onClick={handleExtraSpaces}>Remove Extra-Spaces</button>
             </div>
-            <div className="container my-3" style={{color: props.mode === "dark" ? "white":"black"}}>
+            <div className="container my-3" style={{ color: props.mode === "dark" ? "white" : "black" }}>
                 <h2>Your Text Summary</h2>
-                <p>{text.split(" ").length} words and {text.length} characters.</p>
+                <p>{text.length === 0 ? 0 : text.split(" ").length} words and {text.length} characters.</p>
                 {/* .split(" ") string method split the words with a space and return an array*/}
-                <p>Take {0.008 * text.split(" ").length} minutes to read.</p>
+                <p>Take {text.length === 0 || text === "." ? 0 : 0.008 * text.split(" ").length} minutes to read.</p>
                 <h2>Preview</h2>
-                <p>{text.length > 0 ? text: "Write Something Above for the Preview."}</p>
+                <p>{text.length > 0 ? text : "Write Something Above for the Preview."}</p>
             </div>
         </>
     )
