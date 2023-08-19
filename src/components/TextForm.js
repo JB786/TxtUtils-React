@@ -44,6 +44,7 @@ export default function TextForm(props) {
         element.select();
         //element.setSelectionRange(0,99999); // for mobile devices
         navigator.clipboard.writeText(element.value);
+        document.getSelection().removeAllRanges(); // this line will remove .select() after copying text.
         props.showAlert("Copied to Clipboard!","success")
     }
     
@@ -58,24 +59,24 @@ export default function TextForm(props) {
     }
     return (
         <>
-            <div className="container my-3" style={{ color: props.mode === "dark" ? "white" : "black" }}>
+            <div className="container my-2" style={{ color: props.mode === "dark" ? "white" : "black" }}>
                 <div className="mb-3">
                     <label htmlFor="mytext" className="form-label"><h1>{props.heading}</h1></label>
                     <textarea className="form-control" value={text} onChange={handleOnType} id="mytext" placeholder='Write Anything Here' rows="8" style={{ backgroundColor: props.mode === "dark" ? "rgb(112 112 102)" : "white", color: props.mode === "dark" ? "rgb(224, 241, 6)" : "black" }}></textarea>
                 </div>
-                <button className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1`} onClick={handleUpClick}>To UpperCase</button>
-                <button className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1`} onClick={handleLowClick}>To LowerCase</button>
-                <button className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1`} onClick={handleNoClick}>Clear All</button>
-                <button className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1`} onClick={handleCopyClick}>Copy to Clipboard</button>
-                <button className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1`} onClick={handleExtraSpaces}>Remove Extra-Spaces</button>
+                <button disabled={text.length === 0} className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1 my-1`} onClick={handleUpClick}>To UpperCase</button>
+                <button disabled={text.length === 0} className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1 my-1`} onClick={handleLowClick}>To LowerCase</button>
+                <button disabled={text.length === 0} className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1 my-1`} onClick={handleNoClick}>Clear All</button>
+                <button disabled={text.length === 0} className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1 my-1`} onClick={handleCopyClick}>Copy to Clipboard</button>
+                <button disabled={text.length === 0} className={`btn btn-${props.mode === "dark" ? "info" : "primary"} mx-1 my-1`} onClick={handleExtraSpaces}>Remove Extra-Spaces</button>
             </div>
             <div className="container my-3" style={{ color: props.mode === "dark" ? "white" : "black" }}>
                 <h2>Your Text Summary</h2>
-                <p>{text.length === 0 ? 0 : text.split(" ").length} words and {text.length} characters.</p>
-                {/* .split(" ") string method split the words with a space and return an array*/}
-                <p>Take {text.length === 0 || text === "." ? 0 : 0.008 * text.split(" ").length} minutes to read.</p>
+                <p>{text.split(" ").filter((element)=>{return element.length !== 0}).length} words and {text.length} characters.</p>
+                {/* .split(" ") string method split the words with a space and return an array. Then filter is used to remove that space element from the returned array so that it won't show word whenever space is typed.*/}
+                <p>Take {0.008 * text.split(" ").filter((element)=>{return element.length !== 0}).length} minutes to read.</p>
                 <h2>Preview</h2>
-                <p>{text.length > 0 ? text : "Write Something Above for the Preview."}</p>
+                <p>{text.length > 0 ? text : "Nothing to Preview"}</p>
             </div>
         </>
     )

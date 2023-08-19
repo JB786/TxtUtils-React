@@ -2,10 +2,10 @@
 // import './App.css';
 
 import { useState } from "react";
-import About from "./components/About";
 import Navbar from "./components/Navbar";
 import TextForm from "./components/TextForm";
 import Alert from "./components/Alert";
+import About from "./components/About";
 import {
   BrowserRouter,
   Routes,
@@ -17,7 +17,7 @@ import {
 export default function App() {
 
   const [mode, setMode] = useState("light");
-  const [modeText, setModeText] = useState("Toggle Dark Mode");
+  const [modeText, setModeText] = useState("Enable Dark Mode");
   const [alert, setAlert] = useState(null);
 
   const showAlert = (message, type) => {
@@ -32,18 +32,30 @@ export default function App() {
     }, 1500)
   }
 
-  const toggleMode = () => {
+  const removeCls = ()=>{
+    document.body.classList.remove("bg-primary")
+    document.body.classList.remove("bg-secondary")
+    document.body.classList.remove("bg-danger")
+    document.body.classList.remove("bg-info")
+    document.body.classList.remove("bg-warning")
+    document.body.classList.remove("bg-light")
+    document.body.classList.remove("bg-dark")
+  }
+
+  const toggleMode = (cls) => {
+    removeCls();
+    document.body.classList.add(`bg-${cls}`)
     if (mode === "light") {
       setMode("dark")
-      setModeText("Toggle Light Mode")
+      setModeText("Disable Dark Mode")
       document.body.style.backgroundColor = "#0a0720";
       showAlert("Dark Mode Enabled!", "success")
     }
     else {
       setMode("light")
-      setModeText("Toggle Dark Mode")
+      setModeText("Enable Dark Mode")
       document.body.style.backgroundColor = "white";
-      showAlert("Light Mode Enabled!", "success")
+      showAlert("Dark Mode Disabled!", "success")
     }
   }
 
@@ -52,13 +64,13 @@ export default function App() {
     <>
       <BrowserRouter>
         <Navbar title="TxtUtils.io" mode={mode} toggleMode={toggleMode} modeText={modeText} />
+        <Alert alert={alert} />
         {/* React-Router-dom code */}
         <Routes>
-          <Route exact path="/" element={<TextForm heading="Enter Your Text Below" mode={mode} showAlert={showAlert} />} />
-          <Route exact path="/about" element={<About />} />
+          <Route exact path="/" element={<TextForm heading="Try TxtUtils - word counter, character counter, remove extra spaces" mode={mode} showAlert={showAlert} />} />
+          <Route exact path="/about" element={<About mode={mode} />} />
         </Routes>
         {/* React-Router-dom code */}
-        <Alert alert={alert} />
       </BrowserRouter >
     </>
   );

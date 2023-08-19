@@ -1,75 +1,65 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-export default function About() {
-    const [myStyle, setmyStyle] = useState({
-        color: "black",
-        backgroundColor: "white",
-        border: "1px solid white"
-    });
+export default function About(props) {
 
-    const [btnText, setbtnText] = useState("Toggle Dark Mode");
-
-    const toggleStyle = () => {
-        if(myStyle.color === "black" && myStyle.backgroundColor === "white"){
-            setmyStyle({
-                color: "white",
-                backgroundColor: "black"
-            })
-            setbtnText("Toggle Light Mode");
-        }
-        else{
-            setmyStyle({
-                color: "black",
-                backgroundColor: "white"
-            })
-            setbtnText("Toggle Dark Mode");
-        }
+    let myStyle = {
+        color: props.mode === "dark" ? "white" : "black",
+        backgroundColor: props.mode === "dark" ? "#0a0720" : "white"
     }
 
-
     return (
-        <div className='container my-4' style={myStyle}>
+        <div className='container my-3' style={myStyle}>
             <h1>About TxtUtils</h1>
-            <div className="accordion" id="accordionExample">
+            <div className="accordion my-4" id="accordionExample">
                 <div className="accordion-item" style={myStyle}>
                     <h2 className="accordion-header">
                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style={myStyle}>
-                            Accordion Item #1
+                            <strong>Introduction</strong>
                         </button>
                     </h2>
                     <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                         <div className="accordion-body">
-                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        Welcome to TxtUtils, the premier text utility web application designed to streamline your text-related tasks and enhance your productivity. Whether you're a student, professional, writer, or just someone who deals with text regularly, TxtUtils is here to simplify your work and elevate your experience.
                         </div>
                     </div>
                 </div>
                 <div className="accordion-item" style={myStyle}>
                     <h2 className="accordion-header">
                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style={myStyle}>
-                            Accordion Item #2
+                            <strong>Word, Character Count & Time</strong>
                         </button>
                     </h2>
                     <div id="collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div className="accordion-body">
-                            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        Accurate word and character counting is crucial for essays, reports, emails, and more. TxtUtils provides an instant word and character count, ensuring that your content fits within specified limits and requirements. Not just that, it also provides time required to read your content which is beneficial if your are preparing for speech or presentation.
                         </div>
                     </div>
                 </div>
                 <div className="accordion-item" style={myStyle}>
                     <h2 className="accordion-header">
                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style={myStyle}>
-                            Accordion Item #3
+                            <strong>User-Friendly Interface along with Dark-Mode</strong>
                         </button>
                     </h2>
                     <div id="collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div className="accordion-body">
-                            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        Designed with simplicity in mind, TxtUtils offers an intuitive and user-friendly interface. Navigate effortlessly through the app's features and accomplish tasks with just a few taps. <br />
+                        TxtUtils cares about your eyesight and comfort. Switch to dark mode to reduce eye strain during nighttime use.
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="container my-4">
-                <button type="button" className='btn btn-primary' onClick={toggleStyle}>{btnText}</button>
+                <div className="accordion-item" style={myStyle}>
+                    <h2 className="accordion-header">
+                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style={myStyle}>
+                            <strong>Why TxtUtils?</strong>
+                        </button>
+                    </h2>
+                    <div id="collapseFour" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div className="accordion-body">
+                        TxtUtils was developed with the vision of simplifying your text-related tasks, saving you time, and enhancing the quality of your work. Whether you're a student aiming for academic excellence, a professional striving for polished communication, or a creative writer expressing your thoughts, TxtUtils is the tool that empowers you to achieve your goals effortlessly.
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
