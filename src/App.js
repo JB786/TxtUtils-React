@@ -32,19 +32,7 @@ export default function App() {
     }, 1500)
   }
 
-  const removeCls = ()=>{
-    document.body.classList.remove("bg-primary")
-    document.body.classList.remove("bg-secondary")
-    document.body.classList.remove("bg-danger")
-    document.body.classList.remove("bg-info")
-    document.body.classList.remove("bg-warning")
-    document.body.classList.remove("bg-light")
-    document.body.classList.remove("bg-dark")
-  }
-
-  const toggleMode = (cls) => {
-    removeCls();
-    document.body.classList.add(`bg-${cls}`)
+  const toggleMode = () => {
     if (mode === "light") {
       setMode("dark")
       setModeText("Disable Dark Mode")

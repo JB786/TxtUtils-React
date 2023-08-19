@@ -41,10 +41,10 @@ export default function TextForm(props) {
     
     const handleCopyClick = () => {
         let element = document.getElementById("mytext");
-        element.select();
+        //element.select();
         //element.setSelectionRange(0,99999); // for mobile devices
         navigator.clipboard.writeText(element.value);
-        document.getSelection().removeAllRanges(); // this line will remove .select() after copying text.
+        //document.getSelection().removeAllRanges(); // this line will remove .select() after copying text.
         props.showAlert("Copied to Clipboard!","success")
     }
     
@@ -72,9 +72,9 @@ export default function TextForm(props) {
             </div>
             <div className="container my-3" style={{ color: props.mode === "dark" ? "white" : "black" }}>
                 <h2>Your Text Summary</h2>
-                <p>{text.split(" ").filter((element)=>{return element.length !== 0}).length} words and {text.length} characters.</p>
+                <p>{text.split(/\s+/).filter((element)=>{return element.length !== 0}).length} words and {text.length} characters.</p>
                 {/* .split(" ") string method split the words with a space and return an array. Then filter is used to remove that space element from the returned array so that it won't show word whenever space is typed.*/}
-                <p>Take {0.008 * text.split(" ").filter((element)=>{return element.length !== 0}).length} minutes to read.</p>
+                <p>Take {0.008 * text.split(/\s+/).filter((element)=>{return element.length !== 0}).length} minutes to read.</p>
                 <h2>Preview</h2>
                 <p>{text.length > 0 ? text : "Nothing to Preview"}</p>
             </div>
